@@ -13,6 +13,7 @@ int main(){
     int n;
     int i;
     int yer, yer2, yer3;
+    int ikinci, ucuncu;
 
     node* createNode();
     void insertEnd(node**, int, int);
@@ -20,6 +21,7 @@ int main(){
     void printLists(node**);
     int ortakSayiYerlestirme(node **, int , int);
     int ortakSayiveYeri(node **, node **, node **);
+    int hangiYoneKacTur(int, int, int);
 
     node *head = NULL;
     node *head2 = NULL;
@@ -77,6 +79,8 @@ int main(){
 
     printf("\nyer=%d\tyer2=%d\tyer3=%d", yer, yer2, yer3);
     ortakSayiveYeri(&head, &head2, &head3);
+    ikinci = hangiYoneKacTur(yer, yer2, M);
+    ucuncu = hangiYoneKacTur(yer, yer3, M);
 
 
 
@@ -312,6 +316,32 @@ int ortakSayiveYeri(node **head, node **head2, node **head3){
     printf("\ni=%d\ti2=%d\ti3=%d\n", i, i2, i3);
 }
 
+int hangiYoneKacTur(int yer, int yer2, int M){
+    int sayi, sayi2, sayi3, sayi4, mesafe, mesafe2, x;
+    
+    printf("\nSayinin onundeki eksi deger ters yönde çevrilmesi gerektigini belirtir.\n");
 
+    sayi = yer - yer2;
+    printf("\nmesafe1=%d", sayi);
+    if(sayi<=0){
+        x = yer + M;
+        sayi2 = x - yer2;
+        printf("\nmesafe2=%d", sayi2);
+    }else if(sayi>0){
+        x = yer2 + M;
+        sayi2 = yer - x;
+        printf("\nmesafe2=%d", sayi2);
+    }
+    
+    if(abs(sayi) <= abs(sayi2)){
+
+        printf("\nmesafe    =   %d", sayi);
+        return sayi;
+    }else if(abs(sayi2) < abs(sayi)){
+        printf("\nmesafe    =   %d", sayi2);
+        return sayi2;
+    }
+
+}
 
 
