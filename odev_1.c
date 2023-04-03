@@ -18,6 +18,7 @@ int main(){
     void insertEnd(node**, int, int);
     void insertEnd2(node **, node **, node **, int , int);
     void printLists(node**);
+    void ortakSayiYerlestirme(node **, int , int);
 
     node *head = NULL;
     node *head2 = NULL;
@@ -56,6 +57,16 @@ int main(){
         printf("\nBir");
         insertEnd2(&head, &head2, &head3, N, ortak);
     }
+
+    printLists(&head);
+    printf("\n\n");
+    printLists(&head2);
+    printf("\n\n");
+    printLists(&head3);
+
+    ortakSayiYerlestirme(&head, ortak, M);
+    ortakSayiYerlestirme(&head2, ortak, M);
+    ortakSayiYerlestirme(&head3, ortak, M);
 
     printLists(&head);
     printf("\n\n");
@@ -204,6 +215,10 @@ void insertEnd2(node **head, node **head2, node **head3, int N, int ortak){
             tmp = tmp->next;
         }
         printf("        flag2=%d", flag);
+
+        if((*head3 == NULL) && (value == ortak)){
+            flag = 1;
+        }
         
     }
 
@@ -231,4 +246,35 @@ void insertEnd2(node **head, node **head2, node **head3, int N, int ortak){
     
     return;
 }
+
+void ortakSayiYerlestirme(node **head, int ortak, int M){
+    int yer = rand() % M;
+    int i;
+    node *newNode = createNode();
+    node *curr = *head;
+    node *prev = NULL;
+
+    printf("    %d", yer);
+
+    if(yer==0){
+        newNode->value = ortak;
+        newNode->next = curr;
+        *head = newNode;
+    }else{
+
+        for(i=0;i<yer;i++){
+            prev = curr;
+            curr = curr->next;
+        }
+        newNode->value = ortak;
+        prev->next = newNode;
+        newNode->next = curr;
+    }
+
+}
+
+
+
+
+
 
