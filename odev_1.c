@@ -12,13 +12,14 @@ int main(){
     int ortak;
     int n;
     int i;
- 
+    int yer, yer2, yer3;
 
     node* createNode();
     void insertEnd(node**, int, int);
     void insertEnd2(node **, node **, node **, int , int);
     void printLists(node**);
-    void ortakSayiYerlestirme(node **, int , int);
+    int ortakSayiYerlestirme(node **, int , int);
+    int ortakSayiveYeri(node **, node **, node **);
 
     node *head = NULL;
     node *head2 = NULL;
@@ -64,15 +65,19 @@ int main(){
     printf("\n\n");
     printLists(&head3);
 
-    ortakSayiYerlestirme(&head, ortak, M);
-    ortakSayiYerlestirme(&head2, ortak, M);
-    ortakSayiYerlestirme(&head3, ortak, M);
+    yer = ortakSayiYerlestirme(&head, ortak, M);
+    yer2 = ortakSayiYerlestirme(&head2, ortak, M);
+    yer3 = ortakSayiYerlestirme(&head3, ortak, M);
 
     printLists(&head);
     printf("\n\n");
     printLists(&head2);
     printf("\n\n");
     printLists(&head3);
+
+    printf("\nyer=%d\tyer2=%d\tyer3=%d", yer, yer2, yer3);
+    ortakSayiveYeri(&head, &head2, &head3);
+
 
 
     return 0;
@@ -247,7 +252,7 @@ void insertEnd2(node **head, node **head2, node **head3, int N, int ortak){
     return;
 }
 
-void ortakSayiYerlestirme(node **head, int ortak, int M){
+int ortakSayiYerlestirme(node **head, int ortak, int M){
     int yer = rand() % M;
     int i;
     node *newNode = createNode();
@@ -271,9 +276,41 @@ void ortakSayiYerlestirme(node **head, int ortak, int M){
         newNode->next = curr;
     }
 
+    return yer;
 }
 
+int ortakSayiveYeri(node **head, node **head2, node **head3){
+    node *tmp = *head;
+    node *tmp2 = *head2;
+    node *tmp3 = *head3;
+    int i=0, i2=0, i3=0;
+    int flag = 0;
 
+    while((tmp!=NULL)&&(flag==0)){
+        i++;
+        i2 = 0;
+        tmp2 = *head2;
+        while((tmp2!=NULL)&&(flag==0)){
+            i2++;
+            i3 = 0;
+            tmp3 = *head3;
+            if(tmp->value == tmp2->value){
+                while((tmp3!=NULL)&&(flag==0)){
+                    i3++;
+                    if(tmp->value == tmp3->value){
+                        flag = 1;
+                        printf("\nOrtak deger = %d", tmp->value);
+                    }
+                    tmp3 = tmp3->next;
+                }
+            }
+            tmp2 = tmp2->next;
+        }
+        tmp = tmp->next;
+    }
+
+    printf("\ni=%d\ti2=%d\ti3=%d\n", i, i2, i3);
+}
 
 
 
