@@ -5,6 +5,7 @@
 typedef struct node{
     int value;
     struct node *next;
+    struct node *prev;
 }node;
 
 int main(){
@@ -19,9 +20,11 @@ int main(){
     void insertEnd(node**, int, int);
     void insertEnd2(node **, node **, node **, int , int);
     void printLists(node**);
+    void printLists2(node **);
     int ortakSayiYerlestirme(node **, int , int);
     int ortakSayiveYeri(node **, node **, node **);
     int hangiYoneKacTur(int, int, int);
+    node* carkCevirmeİslemi(node **, int , int);
 
     node *head = NULL;
     node *head2 = NULL;
@@ -82,6 +85,12 @@ int main(){
     ikinci = hangiYoneKacTur(yer, yer2, M);
     ucuncu = hangiYoneKacTur(yer, yer3, M);
 
+    head2 = carkCevirmeİslemi(&head2, yer2, ikinci);
+    head3 = carkCevirmeİslemi(&head3, yer3, ucuncu);
+
+    printLists2(&head2);
+    printf("\n\n");
+    printLists2(&head3);
 
 
     return 0;
@@ -94,6 +103,17 @@ void printLists(node **head){
         tmp = tmp->next;
         
     }
+}
+
+void printLists2(node **head){
+    node *tmp = *head;
+    node *tut = *head;
+    while(tmp->next != tut){
+        printf("\n%d", tmp->value);
+        tmp = tmp->next;
+        
+    }
+    printf("\n%d", tmp->value);
 }
 
 node* createNode(){
@@ -127,6 +147,7 @@ void insertEnd(node **head, int N, int ortak){
     if(*head == NULL){
         newNode->value = value;
         newNode->next = NULL;
+        newNode->prev = NULL;
         printf("\n          %d");
         *head = newNode;
         
@@ -154,11 +175,14 @@ void insertEnd(node **head, int N, int ortak){
     }
 
     node *curr = *head;
+    
     while(curr->next!=NULL){
+        prev = curr;
         curr = curr->next;
     }
     newNode->value = value;
     newNode->next = NULL;
+    newNode->prev = curr;
     curr->next = newNode;
 
     
@@ -234,6 +258,7 @@ void insertEnd2(node **head, node **head2, node **head3, int N, int ortak){
     if(*head3 == NULL){
         newNode->value = value;
         newNode->next = NULL;
+        newNode->prev = NULL;
         printf("\n          %d");
         *head3 = newNode;
         
@@ -244,6 +269,7 @@ void insertEnd2(node **head, node **head2, node **head3, int N, int ortak){
     }
     newNode->value = value;
     newNode->next = NULL;
+    newNode->prev = curr;
     curr->next = newNode;
 
     
@@ -344,4 +370,31 @@ int hangiYoneKacTur(int yer, int yer2, int M){
 
 }
 
+node* carkCevirmeİslemi(node **head, int yer, int nereye){
+    int i;
+    node *curr = *head;
+    node *tut = *head;
+    while(curr->next != NULL){
+        curr = curr->next;
+    }
+    curr->next = tut;
+    tut->prev = curr;
+    
+    node *curr2 = *head;
+    if(nereye == 0){
+        return curr2;
+    }
+    if(nereye<0){
+        for(i=0;i<abs(nereye);i++){
+            curr2 = curr2->next;
+        }
+        return curr2;
+    }
+    if(nereye>0){
+        for(i=0;i<abs(nereye);i++){
+            curr2 = curr2->prev;
+        }
+        return curr2;
+    }
 
+}
