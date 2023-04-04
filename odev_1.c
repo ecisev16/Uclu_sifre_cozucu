@@ -41,90 +41,95 @@ int main(){
         n++;
     }
 
-    while(N < n){
+    while(N <= n){
         printf("\nLutfen N degerini %d degerin esit ya da buyuk olacak sekilde giriniz: ", n+1);
         scanf("%d", &N);
     }
 
     ortak = rand() % N + 1;
-    printf("\n%d  %d  %d", M, N, ortak);
+    //printf("\n%d  %d  %d", M, N, ortak);
 
     for(i=0;i<M-1;i++){
-        printf("\nBir");
+        
         insertEnd(&head, N, ortak);    
     }
 
     for(i=0;i<M-1;i++){
-        printf("\nBir");
+        
         insertEnd(&head2, N, ortak);    
     }
 
     for(i=0;i<M-1;i++){
-        printf("\nBir");
+        
         insertEnd2(&head, &head2, &head3, N, ortak);
     }
-
-    printLists(&head);
-    printf("\n\n");
-    printLists(&head2);
-    printf("\n\n");
-    printLists(&head3);
 
     yer = ortakSayiYerlestirme(&head, ortak, M);
     yer2 = ortakSayiYerlestirme(&head2, ortak, M);
     yer3 = ortakSayiYerlestirme(&head3, ortak, M);
 
+    printf("\n");
+    printf("Birinci cark : ");
     printLists(&head);
-    printf("\n\n");
+    printf("İkinci cark : ");
     printLists(&head2);
-    printf("\n\n");
+    printf("İkinci cark : ");
     printLists(&head3);
+    
 
-    printf("\nyer=%d\tyer2=%d\tyer3=%d", yer, yer2, yer3);
     ortakSayiveYeri(&head, &head2, &head3);
+    printf("\nSayi negatif degerli ise ters yönde cevrilir, pozitif degerli ise saat yönünde cevrilir.\n");
+    printf("\nbirinci ile ikinci cark arasindaki ");
     ikinci = hangiYoneKacTur(yer, yer2, M);
+    printf("\nbirinci ile ucuncu cark arasindaki ");
     ucuncu = hangiYoneKacTur(yer, yer3, M);
 
+    
     head2 = carkCevirmeİslemi(&head2, yer2, ikinci);
     head3 = carkCevirmeİslemi(&head3, yer3, ucuncu);
 
+    printf("\n");
+    printf("Birinci cark : ");
+    printLists(&head);
+    printf("İkinci cark : ");
     printLists2(&head2);
-    printf("\n\n");
+    printf("İkinci cark : ");
     printLists2(&head3);
-
 
     return 0;
 }
 
 void printLists(node **head){
     node *tmp = *head;
+    
     while(tmp != NULL){
-        printf("\n%d", tmp->value);
+        printf("%d  ", tmp->value);
         tmp = tmp->next;
         
     }
+    printf("\n");
 }
 
 void printLists2(node **head){
     node *tmp = *head;
     node *tut = *head;
     while(tmp->next != tut){
-        printf("\n%d", tmp->value);
+        printf("%d  ", tmp->value);
         tmp = tmp->next;
         
     }
-    printf("\n%d", tmp->value);
+    printf("%d", tmp->value);
+    printf("\n");
 }
 
 node* createNode(){
-    printf("\niki");
+    
     node *ptr;
     ptr = (node*)malloc(sizeof(node));
     if(ptr == NULL){
         printf("Allocation error\n");
         exit(-16);
     }
-    //ptr->next = NULL;
     return ptr;
 }
 
@@ -134,43 +139,40 @@ void insertEnd(node **head, int N, int ortak){
     node *tmp;
     node *prev;
     node *newNode = createNode();
-    printf("%d", newNode);
 
-    printf("\nuc");
     value = rand() % N + 1;
-    printf("    rand sayi: %d", value);
+    //printf("    rand sayi: %d", value);
     while(value == ortak){
         value = rand() % N + 1;
-        printf("    iç rand sayi: %d", value);
+        //printf("    iç rand sayi: %d", value);
     }
 
     if(*head == NULL){
         newNode->value = value;
         newNode->next = NULL;
         newNode->prev = NULL;
-        printf("\n          %d");
         *head = newNode;
         
     }else{
     
 
     while(flag == 1){
-        //prev = NULL;
+        
         tmp = *head;
         flag = 0;
         while((tmp!=NULL)&&(flag==0)){
             if((tmp->value == value) || (ortak == value)){
                 
                 value = rand() % N + 1;
-                printf("icicic rand sayi = %d", value);
+                //printf("icicic rand sayi = %d", value);
                 flag = 1;
             }
-            //prev = tmp;
-            printf("\nvalue of tmp = %d", tmp->value);
+            
+            //printf("\nvalue of tmp = %d", tmp->value);
             tmp = tmp->next;
-            //printf("\nvalue of tmp2 = %d", tmp->value);
+            
         }
-        printf("        flag=%d", flag);
+        //printf("        flag=%d", flag);
         
     }
 
@@ -184,9 +186,6 @@ void insertEnd(node **head, int N, int ortak){
     newNode->next = NULL;
     newNode->prev = curr;
     curr->next = newNode;
-
-    
-    printf("\nvalue of tmp2 = %d", curr->next->value);
     
     }
     
@@ -203,43 +202,41 @@ void insertEnd2(node **head, node **head2, node **head3, int N, int ortak){
     node *tmp3;
     node *prev;
     node *newNode = createNode();
-    printf("%d", newNode);
-
-    printf("\nuc");
+  
     value = rand() % N + 1;
-    printf("    rand sayi: %d", value);
+    //printf("    rand sayi: %d", value);
     while(value == ortak){
         value = rand() % N + 1;
-        printf("    iç rand sayi: %d", value);
+        //printf("    iç rand sayi: %d", value);
     }
 
     while(flag == 1){
-        //prev = NULL;
+        
         tmp = *head;
-        //tmp2 = *head2;
+        
         tmp3 = *head3;
         flag = 0;
         while((tmp3!=NULL)&&(flag==0)){
             if((tmp3->value == value) || (ortak == value)){
                 
                 value = rand() % N + 1;
-                printf("icicic rand sayi = %d", value);
+                //printf("icicic rand sayi = %d", value);
                 flag = 1;
             }
             
-            //prev = tmp;
-            printf("\nvalue of tmp = %d", tmp->value);
+            
+            //printf("\nvalue of tmp = %d", tmp->value);
             tmp3 = tmp3->next;
-            //printf("\nvalue of tmp2 = %d", tmp->value);
+            
         }
-        printf("        flag1=%d", flag);
+        //printf("        flag1=%d", flag);
         while((tmp!=NULL)&&(flag==0)){
             if(tmp->value==value){
                 tmp2 = *head2;
                 while((tmp2!=NULL)&&(flag==0)){
                     if(tmp2->value == value){
                         value = rand() % N + 1;
-                        printf("icicic rand sayi = %d", value);
+                        //printf("icicic rand sayi = %d", value);
                         flag = 1;
                     }
                     tmp2 = tmp2->next;
@@ -247,7 +244,7 @@ void insertEnd2(node **head, node **head2, node **head3, int N, int ortak){
             }
             tmp = tmp->next;
         }
-        printf("        flag2=%d", flag);
+        //printf("        flag2=%d", flag);
 
         if((*head3 == NULL) && (value == ortak)){
             flag = 1;
@@ -259,7 +256,6 @@ void insertEnd2(node **head, node **head2, node **head3, int N, int ortak){
         newNode->value = value;
         newNode->next = NULL;
         newNode->prev = NULL;
-        printf("\n          %d");
         *head3 = newNode;
         
     }else{
@@ -271,9 +267,6 @@ void insertEnd2(node **head, node **head2, node **head3, int N, int ortak){
     newNode->next = NULL;
     newNode->prev = curr;
     curr->next = newNode;
-
-    
-    printf("\nvalue of tmp2 = %d", curr->next->value);
     
     }
     
@@ -288,8 +281,6 @@ int ortakSayiYerlestirme(node **head, int ortak, int M){
     node *newNode = createNode();
     node *curr = *head;
     node *prev = NULL;
-
-    printf("    %d", yer);
 
     if(yer==0){
         newNode->value = ortak;
@@ -339,32 +330,29 @@ int ortakSayiveYeri(node **head, node **head2, node **head3){
         tmp = tmp->next;
     }
 
-    printf("\ni=%d\ti2=%d\ti3=%d\n", i, i2, i3);
+    printf("\nBirinci carktaki yeri = %d\tİkinci carktaki yeri = %d\tUcuncu carktaki yeri=%d\n", i, i2, i3);
 }
 
 int hangiYoneKacTur(int yer, int yer2, int M){
     int sayi, sayi2, sayi3, sayi4, mesafe, mesafe2, x;
     
-    printf("\nSayinin onundeki eksi deger ters yönde çevrilmesi gerektigini belirtir.\n");
-
     sayi = yer - yer2;
-    printf("\nmesafe1=%d", sayi);
     if(sayi<=0){
         x = yer + M;
         sayi2 = x - yer2;
-        printf("\nmesafe2=%d", sayi2);
+        
     }else if(sayi>0){
         x = yer2 + M;
         sayi2 = yer - x;
-        printf("\nmesafe2=%d", sayi2);
+        
     }
     
     if(abs(sayi) <= abs(sayi2)){
 
-        printf("\nmesafe    =   %d", sayi);
+        printf("mesafe    =   %d", sayi);
         return sayi;
     }else if(abs(sayi2) < abs(sayi)){
-        printf("\nmesafe    =   %d", sayi2);
+        printf("mesafe    =   %d", sayi2);
         return sayi2;
     }
 
